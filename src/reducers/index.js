@@ -1,5 +1,10 @@
 import { combineReducers } from 'redux';
-import { SELECT_COUNTRIES, SELECT_FIDO, DELETE_PODCAST } from '../actions';
+import {
+  SELECT_COUNTRIES,
+  SELECT_FIDO,
+  DELETE_PODCAST,
+  RECEIVE_FIDO
+} from '../actions';
 import find from 'lodash.find';
 
 function podcasts(state = [], action) {
@@ -27,6 +32,10 @@ function fido(state = {
   }
 }, action) {
   switch (action.type) {
+  case RECEIVE_FIDO:
+    return Object.assign({}, state, {
+      reviews: action.payload.reviews
+    });
   case DELETE_PODCAST:
   case SELECT_FIDO:
     return Object.assign({}, state, {

@@ -10,6 +10,7 @@ import { Header } from '../components/Header';
 import Countries from '../components/Countries';
 import Picker from '../components/Picker';
 import PodcastList from '../components/PodcastList';
+import ReviewList from '../components/ReviewList';
 
 class App extends Component {
   constructor(props) {
@@ -38,9 +39,11 @@ class App extends Component {
   }
 
   handlePodcastDelete(id) {
-    return () => {
-      this.props.dispatch(deletePodcast(id))
-    }
+    return () => this.props.dispatch(deletePodcast(id));
+  }
+
+  handleFetch() {
+    this.props.dispatch(fetchFido());
   }
 
   render() {
@@ -49,9 +52,21 @@ class App extends Component {
     return (
       <div>
         <Header />
-        <Countries countries={fido.countries} handleCountriesChange={this.handleCountriesChange.bind(this)} />
-        <Picker onSubmit={this.handlePickerSubmit.bind(this)} ref="picker" key="picker" data={fido.selected} />
-        <PodcastList podcasts={fido.podcasts} handlePodcastDelete={this.handlePodcastDelete.bind(this)} />
+        <Countries
+          countries={fido.countries}
+          handleCountriesChange={this.handleCountriesChange.bind(this)} />
+        <Picker
+          onSubmit={this.handlePickerSubmit.bind(this)}
+          ref="picker"
+          key="picker"
+          data={fido.selected} />
+        <PodcastList
+          podcasts={fido.podcasts}
+          handlePodcastDelete={this.handlePodcastDelete.bind(this)}
+          handleFetch={this.handleFetch.bind(this)} />
+        <ReviewList
+          reviews={fido.reviews}
+          podcasts={fido.podcasts} />
       </div>
     );
   }

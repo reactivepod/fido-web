@@ -26,27 +26,23 @@ function requestFido(podcast) {
   }
 }
 
-export function fetchFido(podcast = {}) {
+export function fetchFido() {
   return (dispatch, getState) => {
-    dispatch(requestFido(podcast));
+    // dispatch(requestFido(podcast));
     const state = getState().fido;
 
     const data = {
-      podcasts: [
-        {
-          name: 'Reactive',
-          podcastId: '1020286000',
-          countries: state.countries
-        },
-        {
-          name: 'Descriptive',
-          podcastId: '926224392',
+      podcasts: state.podcasts.map(podcast => {
+        return {
+          name: podcast.name,
+          podcastId: podcast.id,
           countries: state.countries
         }
-      ]
-    }
+      })
+    };
+    console.log('fetch', data)
 
-    return fido(data.podcasts).then(result => dispatch(receiveFido(result))).catch(console.log.bind(console))
+    return fido(data.podcasts).then(result => dispatch(receiveFido(result)))
   }
 }
 
