@@ -1,22 +1,22 @@
 import { combineReducers } from 'redux';
 import {
   SELECT_COUNTRIES,
-  SELECT_FIDO,
   DELETE_PODCAST,
+  ADD_PODCAST,
   RECEIVE_FIDO
 } from '../actions';
 import find from 'lodash.find';
 
 function podcasts(state = [], action) {
   switch (action.type) {
-  case SELECT_FIDO:
-    if (!find(state, podcast => podcast.id === action.payload.podcast.id)) {
+  case ADD_PODCAST:
+    if (!find(state, (podcast) => podcast.id === action.payload.podcast.id)) {
       return [action.payload.podcast, ...state];
     } else {
       return state;
     };
   case DELETE_PODCAST:
-    return state.filter(podcast => podcast.id !== action.payload.id);
+    return state.filter((podcast) => podcast.id !== action.payload.id);
   default:
     return state
   }
@@ -37,7 +37,7 @@ function fido(state = {
       reviews: action.payload.reviews
     });
   case DELETE_PODCAST:
-  case SELECT_FIDO:
+  case ADD_PODCAST:
     return Object.assign({}, state, {
       podcasts: podcasts(state.podcasts, action)
     });

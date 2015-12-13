@@ -6,15 +6,15 @@ class Picker extends Component {
   }
 
   render() {
-    const { onSubmit, data } = this.props;
+    const { onSubmitHandle, data } = this.props;
 
     return (
-      <form className="picker tk-brandon-grotesque" onSubmit={onSubmit}>
+      <form className="picker tk-brandon-grotesque" onSubmit={onSubmitHandle}>
         <p>
-          <label>Name <input ref="podcastName" key="podcastName" defaultValue={data.name} /></label>
+          <label>Name <input ref="name" defaultValue={data.name} /></label>
         </p>
         <p>
-          <label>Podcast ID <input ref="podcastId" key="podcastId" defaultValue={data.id} /></label>
+          <label>Podcast ID <input ref="id" defaultValue={data.id} /></label>
         </p>
         <button type="submit">Add Podcast</button>
       </form>

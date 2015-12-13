@@ -1,15 +1,16 @@
 import React from 'react';
 import ReviewItem from './ReviewItem';
 
-const ReviewList = ({ reviews, podcasts }) => {
-  const renderItem = ({id, name}) => {
+const ReviewList = ({ reviews }) => {
+  const generateKey = (id, review) => `${id}-${review.date.valueOf()}`;
+
+  const renderItem = (id) => {
     if (reviews[id] && reviews[id].reviews) {
       return (
         <div>
-          <h1>{name}</h1>
           <ul>
-            {reviews[id].reviews.map(review => <ReviewItem review={review} />)}
-          </ul>          
+            {reviews[id].reviews.map((review) => <ReviewItem data={review} key={generateKey(id, review)} />)}
+          </ul>
         </div>
       );
     } else {
@@ -18,8 +19,8 @@ const ReviewList = ({ reviews, podcasts }) => {
   };
 
   return (
-    <section className="reviews tk-brandon-grotesque">
-        {podcasts.map(renderItem)}
+    <section className="reviews">
+        {Object.keys(reviews).map(renderItem)}
     </section>
   );
 }

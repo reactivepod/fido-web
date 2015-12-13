@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import {
-  selectFido,
   selectCountries,
   fetchFido,
+  addPodcast,
   deletePodcast
 } from '../actions';
 import { Header } from '../components/Header';
@@ -19,10 +19,10 @@ class App extends Component {
 
   handleCountriesChange(e) {
     const options = e.target.options;
-    const value = [];
+    let value = [];
     for (let i = 0; i < options.length; i++) {
       if (options[i].selected) {
-        value.push(options[i].value);
+        value = value.concat(options[i].value.split(','));
       }
     }
     this.props.dispatch(selectCountries(value));
@@ -30,19 +30,18 @@ class App extends Component {
 
   handlePickerSubmit(e) {
     e.preventDefault();
-    const { podcastId, podcastName } = this.refs.picker.refs;
-    this.props.dispatch(selectFido({
-      name: podcastName.value,
-      id: podcastId.value,
+    const { id, name } = this.refs.picker.refs;
+    this.props.dispatch(addPodcast({
+      name: name.value,
+      id: id.value,
     }));
-    // this.props.dispatch(fetchFido())
   }
 
   handlePodcastDelete(id) {
     return () => this.props.dispatch(deletePodcast(id));
   }
 
-  handleFetch() {
+  handleFetchFido() {
     this.props.dispatch(fetchFido());
   }
 
@@ -53,17 +52,16 @@ class App extends Component {
       <div>
         <Header />
         <Countries
-          countries={fido.countries}
+          data={fido.countries}
           handleCountriesChange={this.handleCountriesChange.bind(this)} />
         <Picker
-          onSubmit={this.handlePickerSubmit.bind(this)}
+          onSubmitHandle={this.handlePickerSubmit.bind(this)}
           ref="picker"
-          key="picker"
           data={fido.selected} />
         <PodcastList
           podcasts={fido.podcasts}
           handlePodcastDelete={this.handlePodcastDelete.bind(this)}
-          handleFetch={this.handleFetch.bind(this)} />
+          handleFetchFido={this.handleFetchFido.bind(this)} />
         <ReviewList
           reviews={fido.reviews}
           podcasts={fido.podcasts} />

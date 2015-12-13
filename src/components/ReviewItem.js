@@ -1,10 +1,10 @@
 import React from 'react';
 
-const ReviewItem = ({ review }) => {
+const ReviewItem = ({ data }) => {
   return (
     <li>
-      <h2>{review.title}</h2>
-      <p>{review.content}</p>
+      <h2>{data.title}</h2>
+      <p>{data.content}</p>
     </li>
   );
 }

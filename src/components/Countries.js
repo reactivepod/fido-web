@@ -1,10 +1,11 @@
 import React from 'react';
 
-const Countries = ({ countries, handleCountriesChange }) => {
+const Countries = ({ data, handleCountriesChange }) => {
   return (
-    <section className="countries tk-brandon-grotesque">
+    <section className="countries">
         <label>Countries
-          <select multiple={true} value={countries} onChange={handleCountriesChange}>
+          <select value={data.join(',')} onChange={handleCountriesChange}>
+            <option value="us,de,gb,ca,at,au,se,nl,br,mx,ru,gr,ar,za,ch,pt">iTunes worldwide</option>
             <option value="us">United States of America</option>
             <option value="de">Germany</option>
             <option value="gb">Great Britain</option>
@@ -26,5 +27,7 @@ const Countries = ({ countries, handleCountriesChange }) => {
     </section>
   );
 }
+
+
 
 export default Countries;

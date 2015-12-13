@@ -1,7 +1,7 @@
 import React from 'react';
 
-export const Header = (props) => (
-  <header className="header tk-brandon-grotesque">
+export const Header = () => (
+  <header className="header">
     <h1>Fido</h1>
   </header>
 );

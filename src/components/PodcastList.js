@@ -1,15 +1,17 @@
 import React from 'react';
 import PodcastItem from './PodcastItem';
 
-const PodcastList = ({ podcasts, handlePodcastDelete, handleFetch }) => {
+const PodcastList = ({ podcasts, handlePodcastDelete, handleFetchFido }) => {
+  const generateKey = (key) => `podcast-${key}`;
+
   return (
-    <section className="podcasts tk-brandon-grotesque">
+    <section className="podcasts">
       <ul>
         {podcasts.map((podcast, i) =>
-          <PodcastItem data={podcast} key={podcast.id} onDelete={handlePodcastDelete} />
+          <PodcastItem data={podcast} onDelete={handlePodcastDelete}  key={generateKey(podcast.id)} />
         )}
       </ul>
-      <button onClick={handleFetch}>Fetch Reviews</button>
+      <button onClick={handleFetchFido}>Fetch Reviews</button>
     </section>
   );
 }
