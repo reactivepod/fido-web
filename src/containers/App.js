@@ -11,6 +11,7 @@ import Countries from '../components/Countries';
 import Picker from '../components/Picker';
 import PodcastList from '../components/PodcastList';
 import ReviewList from '../components/ReviewList';
+import FetchButton from '../components/FetchButton';
 
 class App extends Component {
   constructor(props) {
@@ -32,8 +33,8 @@ class App extends Component {
     e.preventDefault();
     const { id, name } = this.refs.picker.refs;
     this.props.dispatch(addPodcast({
-      name: name.value,
-      id: id.value,
+      name: name.value.trim(),
+      id: id.value.trim(),
     }));
   }
 
@@ -50,18 +51,25 @@ class App extends Component {
 
     return (
       <div>
-        <Header />
-        <Countries
-          data={fido.countries}
-          handleCountriesChange={this.handleCountriesChange.bind(this)} />
+        <Header>
+          <h1>Fido</h1>
+          , find reviews for
+          <PodcastList
+            podcasts={fido.podcasts}
+            handlePodcastDelete={this.handlePodcastDelete.bind(this)} />
+          from
+          <Countries
+            data={fido.countries}
+            handleCountriesChange={this.handleCountriesChange.bind(this)} />
+          <FetchButton
+            progress={fido.isFetching}
+            disabled={!Object.keys(fido.podcasts).length}
+            handleFetchFido={this.handleFetchFido.bind(this)} />
+        </Header>
         <Picker
           onSubmitHandle={this.handlePickerSubmit.bind(this)}
           ref="picker"
           data={fido.selected} />
-        <PodcastList
-          podcasts={fido.podcasts}
-          handlePodcastDelete={this.handlePodcastDelete.bind(this)}
-          handleFetchFido={this.handleFetchFido.bind(this)} />
         <ReviewList
           reviews={fido.reviews}
           podcasts={fido.podcasts} />

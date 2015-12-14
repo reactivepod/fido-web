@@ -1,0 +1,25 @@
+html, body {
+  margin: 0;
+}
+
+.header {
+  background: #396;
+  text-align: center;
+  color: #fff;
+  font-size: 1.4rem;
+}
+
+.header h1 {
+  display: inline-block;
+  font-size: 1em;
+}
+
+.header select {
+  margin: 0 0.3em;
+}
+
+.header button {
+  float: right;
+  margin: 10px;
+  font-weight: bold;
+}

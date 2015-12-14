@@ -1,7 +1,11 @@
 import React from 'react';
 
-export const Header = () => (
+const styles = {
+
+};
+
+export const Header = ({children}) => (
   <header className="header">
-    <h1>Fido</h1>
+    {children}
   </header>
 );
