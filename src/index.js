@@ -1,5 +1,6 @@
 import 'normalize.css/normalize.css';
 import 'ladda/dist/ladda.min.css';
+import 'react-star-rating/dist/css/react-star-rating.min.css';
 import './fido.css';
 
 import React from 'react';

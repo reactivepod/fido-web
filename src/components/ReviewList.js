@@ -8,7 +8,7 @@ const ReviewList = ({ reviews }) => {
     if (reviews[id] && reviews[id].reviews) {
       return (
         <div>
-          <ul>
+          <ul className="reviews__list">
             {reviews[id].reviews.map((review) => <ReviewItem data={review} key={generateKey(id, review)} />)}
           </ul>
         </div>

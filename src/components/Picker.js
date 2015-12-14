@@ -9,7 +9,7 @@ class Picker extends Component {
     const { onSubmitHandle, data } = this.props;
 
     return (
-      <form className="picker tk-brandon-grotesque" onSubmit={onSubmitHandle}>
+      <form className="picker" onSubmit={onSubmitHandle}>
         <p>
           <label>Name <input ref="name" defaultValue={data.name} /></label>
         </p>
