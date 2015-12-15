@@ -1,26 +1,22 @@
 import React from 'react';
 import ReviewItem from './ReviewItem';
 
-const ReviewList = ({ reviews }) => {
+const ReviewList = ({ reviews, selected }) => {
   const generateKey = (id, review) => `${id}-${review.date.valueOf()}`;
 
-  const renderItem = (id) => {
-    if (reviews[id] && reviews[id].reviews) {
-      return (
-        <div>
-          <ul className="reviews__list">
-            {reviews[id].reviews.map((review) => <ReviewItem data={review} key={generateKey(id, review)} />)}
-          </ul>
-        </div>
-      );
+  const renderItems = () => {
+    if (reviews[selected]) {
+      return reviews[selected].reviews.map((review) => <ReviewItem data={review} key={generateKey(selected, review)} />)
     } else {
-      return <ul />;
+      return <div />
     }
-  };
+  }
 
   return (
     <section className="reviews">
-        {Object.keys(reviews).map(renderItem)}
+        <ul className="reviews__list">
+          {renderItems()}
+        </ul>
     </section>
   );
 }

@@ -7,7 +7,7 @@ const ReviewItem = ({ data }) => {
     <li className="reviews__item">
       <article className="review">
         <header className="review__header">
-          <h2><span className="review__title">{data.title}</span> <StarRating name="disabled" disabled={true} size={16} totalStars={5} rating={data.rating} /></h2>
+          <h2><span className="review__title">{data.title}</span> <StarRating name="disabled" disabled={true} size={16} totalStars={5} rating={Number(data.rating)} /></h2>
         </header>
         <footer className="review__footer">
           <span className="review__author">{data.author.name}</span>

@@ -2,6 +2,14 @@ html, body {
   margin: 0;
 }
 
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 .header {
   background: #396;
   text-align: center;

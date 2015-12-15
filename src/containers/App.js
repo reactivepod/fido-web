@@ -4,7 +4,8 @@ import {
   selectCountries,
   fetchFido,
   addPodcast,
-  deletePodcast
+  deletePodcast,
+  selectPodcast
 } from '../actions';
 import { Header } from '../components/Header';
 import Countries from '../components/Countries';
@@ -36,10 +37,12 @@ class App extends Component {
       name: name.value.trim(),
       id: id.value.trim(),
     }));
+    this.props.dispatch(fetchFido());
   }
 
-  handlePodcastDelete(id) {
-    return () => this.props.dispatch(deletePodcast(id));
+  handlePodcastChange(e) {
+    const id = e.target.value;
+    this.props.dispatch(selectPodcast(id));
   }
 
   handleFetchFido() {
@@ -56,7 +59,7 @@ class App extends Component {
           , find reviews for
           <PodcastList
             podcasts={fido.podcasts}
-            handlePodcastDelete={this.handlePodcastDelete.bind(this)} />
+            handlePodcastChange={this.handlePodcastChange.bind(this)} />
           from
           <Countries
             data={fido.countries}
@@ -72,6 +75,7 @@ class App extends Component {
           data={fido.selected} />
         <ReviewList
           reviews={fido.reviews}
+          selected={fido.selected}
           podcasts={fido.podcasts} />
       </div>
     );

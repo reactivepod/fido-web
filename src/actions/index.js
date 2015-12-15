@@ -6,6 +6,7 @@ export const RECEIVE_FIDO = 'RECEIVE_FIDO';
 export const SELECT_COUNTRIES = 'SELECT_COUNTRIES';
 
 export const DELETE_PODCAST = 'DELETE_PODCAST';
+export const SELECT_PODCAST = 'SELECT_PODCAST';
 export const ADD_PODCAST = 'ADD_PODCAST';
 
 function receiveFido(reviews) {
@@ -56,6 +57,15 @@ export function selectCountries(countries) {
 export function deletePodcast(id) {
   return {
     type: DELETE_PODCAST,
+    payload: {
+      id
+    }
+  }
+}
+
+export function selectPodcast(id) {
+  return {
+    type: SELECT_PODCAST,
     payload: {
       id
     }

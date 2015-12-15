@@ -1,5 +1,4 @@
 import React from 'react';
-import PodcastItem from './PodcastItem';
 
 // <section className="podcasts">
 //   <ul>
@@ -9,11 +8,11 @@ import PodcastItem from './PodcastItem';
 //   </ul>
 // </section>
 
-const PodcastList = ({ podcasts, handlePodcastDelete }) => {
+const PodcastList = ({ podcasts, handlePodcastChange }) => {
   const generateKey = (key) => `podcast-${key}`;
 
   return (
-    <select>
+    <select onChange={handlePodcastChange}>
       {podcasts.map((podcast, i) =>
       <option value={podcast.id} key={generateKey(podcast.id)}>{podcast.name}</option>
       )}

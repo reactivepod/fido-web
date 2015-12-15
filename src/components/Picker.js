@@ -6,15 +6,15 @@ class Picker extends Component {
   }
 
   render() {
-    const { onSubmitHandle, data } = this.props;
+    const { onSubmitHandle } = this.props;
 
     return (
       <form className="picker" onSubmit={onSubmitHandle}>
         <p>
-          <label>Name <input ref="name" defaultValue={data.name} /></label>
+          <label>Name <input ref="name" /></label>
         </p>
         <p>
-          <label>Podcast ID <input ref="id" defaultValue={data.id} /></label>
+          <label>Podcast ID <input ref="id" /></label>
         </p>
         <button type="submit">Add Podcast</button>
       </form>

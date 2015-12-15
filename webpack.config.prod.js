@@ -12,6 +12,7 @@ module.exports = {
     publicPath: '/static/'
   },
   plugins: [
+    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
@@ -21,13 +22,16 @@ module.exports = {
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
         warnings: false
+      },
+      output: {
+        comments: false
       }
     })
   ],
   module: {
     loaders: [
       { test: /\.js$/, loaders: ['babel'], include: path.join(__dirname, 'src')},
-      { test: /\.css$/, loader: 'style-loader!css-loader' }
+      { test: /\.css$/, loaders: ['style', 'css'] }
     ]
   }
 };

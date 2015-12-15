@@ -3,6 +3,7 @@ import { LOAD, SAVE } from 'redux-storage';
 import {
   SELECT_COUNTRIES,
   DELETE_PODCAST,
+  SELECT_PODCAST,
   ADD_PODCAST,
   RECEIVE_FIDO,
   REQUEST_FIDO
@@ -13,7 +14,7 @@ function podcasts(state = [], action) {
   switch (action.type) {
   case ADD_PODCAST:
     if (!find(state, (podcast) => podcast.id === action.payload.podcast.id)) {
-      return [action.payload.podcast, ...state];
+      return [...state, action.payload.podcast];
     } else {
       return state;
     };
@@ -29,10 +30,7 @@ function fido(state = {
   podcasts: [],
   reviews: {},
   isFetching: false,
-  selected: {
-    name: 'Reactive',
-    id: '1020286000'
-  }
+  selected: '1020286000'
 }, action) {
   switch (action.type) {
   case LOAD:
@@ -51,6 +49,10 @@ function fido(state = {
     return Object.assign({}, state, {
       podcasts: podcasts(state.podcasts, action)
     });
+  case SELECT_PODCAST:
+    return Object.assign({}, state, {
+      selected: action.payload.id
+    })
   case SELECT_COUNTRIES:
     return Object.assign({}, state, {
       countries: action.payload.countries
