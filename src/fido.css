@@ -10,11 +10,69 @@ html {
   box-sizing: inherit;
 }
 
+.my {
+  background: #275;
+  color: #fff;
+  font-size: 1.2em;
+  padding: .2em .6em;
+}
+
+.my__list {
+  margin: 0;
+  padding: 0;
+  margin: 1em 0;
+}
+
+.my__item {
+  list-style: none;
+  display: inline-block;
+  margin-right: 1em;
+  position: relative;
+}
+
+.my__item p {
+  text-align: center;
+  margin: 0;
+}
+
+.my__delete {
+  width: 1.2em;
+  height: 1.3em;
+  background: #a00;
+  line-height: 0;
+  border: 1px solid white;
+  position: absolute;
+  top: -0.4em;
+  right: -0.4em;
+}
+
+.picker {
+  margin-top: 0.4em;
+}
+
+.picker p {
+  margin: 0;
+}
+
+.picker input {
+  color: #000;
+}
+
+.picker button {
+  margin-left: .4em;
+}
+
+.ladda-label {
+  font-weight: bold;
+}
+
 .header {
   background: #396;
-  text-align: center;
   color: #fff;
   font-size: 1.4rem;
+  padding: .2em .6em;
+  display: flex;
+  justify-content: space-between;
 }
 
 .header h1 {
@@ -27,9 +85,7 @@ html {
 }
 
 .header button {
-  float: right;
   margin: 10px;
-  font-weight: bold;
 }
 
 .reviews__list {
@@ -68,4 +124,11 @@ html {
 .review__body {
   margin-top: 1em;
   font-size: 1.1rem;
+}
+
+.meta {
+  max-width: 32rem;
+  margin: 2em auto 4em;
+  display: flex;
+  justify-content: space-between;
 }

@@ -11,12 +11,9 @@ class Picker extends Component {
     return (
       <form className="picker" onSubmit={onSubmitHandle}>
         <p>
-          <label>Name <input ref="name" /></label>
+          <label>Podcast iTunes URL or ID <input ref="id" placeholder="1020286000" /></label>
+            <button type="submit" data-size="s" data-color="green" className="ladda-button "><span className="ladda-label">Add Podcast</span></button>
         </p>
-        <p>
-          <label>Podcast ID <input ref="id" /></label>
-        </p>
-        <button type="submit">Add Podcast</button>
       </form>
     );
   }

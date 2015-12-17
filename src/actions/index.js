@@ -9,12 +9,11 @@ export const DELETE_PODCAST = 'DELETE_PODCAST';
 export const SELECT_PODCAST = 'SELECT_PODCAST';
 export const ADD_PODCAST = 'ADD_PODCAST';
 
-function receiveFido(reviews) {
+function receiveFido(data) {
   return {
     type: RECEIVE_FIDO,
     payload: {
-      reviews,
-      receivedAt: Date.now()
+      data,
     }
   }
 }

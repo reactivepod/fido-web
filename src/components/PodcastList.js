@@ -8,15 +8,28 @@ import React from 'react';
 //   </ul>
 // </section>
 
-const PodcastList = ({ podcasts, handlePodcastChange }) => {
-  const generateKey = (key) => `podcast-${key}`;
+const PodcastList = ({ podcasts, handlePodcastDelete, fido, handlePodcastPick, selected }) => {
 
   return (
-    <select onChange={handlePodcastChange}>
-      {podcasts.map((podcast, i) =>
-      <option value={podcast.id} key={generateKey(podcast.id)}>{podcast.name}</option>
-      )}
-    </select>
+    <ul className="my__list">
+      {podcasts.map((podcast) => podcast.id).map((id) => {
+        if (fido[id]) {
+          const podcast = fido[id].meta;
+
+          return (
+            <li className="my__item">
+              <div>
+                <button className="my__delete" onClick={handlePodcastDelete(id)}>x</button>
+                <img src={podcast.image['170']} className="my__item__image" onClick={handlePodcastPick(id)} />
+                <p>{podcast.name}</p>
+              </div>
+            </li>
+          );
+        } else {
+          return <li>{id}</li>;
+        }
+      })}
+    </ul>
   );
 }
 

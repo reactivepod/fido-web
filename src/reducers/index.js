@@ -28,7 +28,7 @@ function podcasts(state = [], action) {
 function fido(state = {
   countries: ['us', 'de', 'gb', 'se', 'ca', 'at', 'au', 'se', 'nl', 'br', 'mx', 'ru', 'gr', 'ar', 'za', 'ch', 'pt'],
   podcasts: [],
-  reviews: {},
+  fido: {},
   isFetching: false,
   selected: '1020286000'
 }, action) {
@@ -41,7 +41,7 @@ function fido(state = {
     });
   case RECEIVE_FIDO:
     return Object.assign({}, state, {
-      reviews: action.payload.reviews,
+      fido: action.payload.data,
       isFetching: false
     });
   case DELETE_PODCAST:

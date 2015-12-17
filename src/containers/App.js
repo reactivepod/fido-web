@@ -7,7 +7,6 @@ import {
   deletePodcast,
   selectPodcast
 } from '../actions';
-import { Header } from '../components/Header';
 import Countries from '../components/Countries';
 import Picker from '../components/Picker';
 import PodcastList from '../components/PodcastList';
@@ -17,6 +16,15 @@ import FetchButton from '../components/FetchButton';
 class App extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      my: false
+    }
+  }
+
+  toggleMyPodcasts() {
+    this.setState({
+      my: !this.state.my
+    })
   }
 
   handleCountriesChange(e) {
@@ -32,17 +40,24 @@ class App extends Component {
 
   handlePickerSubmit(e) {
     e.preventDefault();
-    const { id, name } = this.refs.picker.refs;
+    const id = this.refs.picker.refs.id;
     this.props.dispatch(addPodcast({
-      name: name.value.trim(),
       id: id.value.trim(),
     }));
     this.props.dispatch(fetchFido());
   }
 
+  handlePodcastPick(id) {
+    return () => this.props.dispatch(selectPodcast(id));
+  }
+
   handlePodcastChange(e) {
     const id = e.target.value;
     this.props.dispatch(selectPodcast(id));
+  }
+
+  handlePodcastDelete(id) {
+    return () => this.props.dispatch(deletePodcast(id));
   }
 
   handleFetchFido() {
@@ -52,31 +67,58 @@ class App extends Component {
   render() {
     const { dispatch, fido } = this.props;
 
+    const renderMy = () => {
+      if (this.state.my) {
+        return (
+          <div className="my">
+            <Picker
+              onSubmitHandle={this.handlePickerSubmit.bind(this)}
+              ref="picker"
+              data={fido.selected} />
+            <PodcastList
+              podcasts={fido.podcasts}
+              fido={fido.fido}
+              handlePodcastPick={this.handlePodcastPick.bind(this)}
+              handlePodcastDelete={this.handlePodcastDelete.bind(this)} />
+          </div>
+        )
+      } else {
+        return ;
+      }
+    }
+
     return (
       <div>
-        <Header>
-          <h1>Fido</h1>
-          , find reviews for
-          <PodcastList
-            podcasts={fido.podcasts}
-            handlePodcastChange={this.handlePodcastChange.bind(this)} />
-          from
-          <Countries
-            data={fido.countries}
-            handleCountriesChange={this.handleCountriesChange.bind(this)} />
-          <FetchButton
-            progress={fido.isFetching}
-            disabled={!Object.keys(fido.podcasts).length}
-            handleFetchFido={this.handleFetchFido.bind(this)} />
-        </Header>
-        <Picker
-          onSubmitHandle={this.handlePickerSubmit.bind(this)}
-          ref="picker"
-          data={fido.selected} />
+        {renderMy()}
+        <header className="header">
+          <div>
+            <h1>Fido</h1>
+            , find reviews for
+            <select onChange={this.handlePodcastChange.bind(this)}>
+              {Object.keys(fido.fido).map((id) => {
+                const podcast = fido.fido[id].meta;
+                if (podcast && fido.podcasts.filter(i => i.id === id)) {
+                  return <option value={id} key={`select-${id}`}>{podcast.name}</option>
+                }
+              }
+              )}
+            </select>
+            from
+            <Countries
+              data={fido.countries}
+              handleCountriesChange={this.handleCountriesChange.bind(this)} />
+            <FetchButton
+              progress={fido.isFetching}
+              disabled={!Object.keys(fido.podcasts).length}
+              handleFetchFido={this.handleFetchFido.bind(this)} />
+          </div>
+          <div>
+            <button className="my__button" data-size="s" data-color="green" className="ladda-button " onClick={this.toggleMyPodcasts.bind(this)}><span className="ladda-label">My Podcasts</span></button>
+          </div>
+        </header>
         <ReviewList
-          reviews={fido.reviews}
-          selected={fido.selected}
-          podcasts={fido.podcasts} />
+          reviews={fido.fido}
+          selected={fido.selected} />
       </div>
     );
   }
