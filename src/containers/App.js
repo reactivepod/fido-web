@@ -10,6 +10,7 @@ import {
 import Countries from '../components/Countries';
 import Picker from '../components/Picker';
 import PodcastList from '../components/PodcastList';
+import PodcastDropdown from '../components/PodcastDropdown';
 import ReviewList from '../components/ReviewList';
 import FetchButton from '../components/FetchButton';
 
@@ -40,9 +41,10 @@ class App extends Component {
 
   handlePickerSubmit(e) {
     e.preventDefault();
-    const id = this.refs.picker.refs.id;
+    const id = this.refs.picker.refs.id.value.trim();
+    const [value] = id.match(/(\d{6,})/);
     this.props.dispatch(addPodcast({
-      id: id.value.trim(),
+      id: value,
     }));
     this.props.dispatch(fetchFido());
   }
@@ -68,7 +70,7 @@ class App extends Component {
     const { dispatch, fido } = this.props;
 
     const renderMy = () => {
-      if (this.state.my) {
+      if (this.state.my || !fido.podcasts.length) {
         return (
           <div className="my">
             <Picker
@@ -93,26 +95,25 @@ class App extends Component {
         <header className="header">
           <div>
             <h1>Fido</h1>
-            , find reviews for
-            <select onChange={this.handlePodcastChange.bind(this)}>
-              {Object.keys(fido.fido).map((id) => {
-                const podcast = fido.fido[id].meta;
-                if (podcast && fido.podcasts.filter(i => i.id === id)) {
-                  return <option value={id} key={`select-${id}`}>{podcast.name}</option>
-                }
-              }
-              )}
-            </select>
-            from
+            <PodcastDropdown
+              fido={fido.fido}
+              podcasts={fido.podcasts}
+              selected={fido.selected}
+              handlePodcastChange={this.handlePodcastChange.bind(this)} />
             <Countries
               data={fido.countries}
+              disabled={!fido.podcasts.length}
               handleCountriesChange={this.handleCountriesChange.bind(this)} />
             <FetchButton
               progress={fido.isFetching}
-              disabled={!Object.keys(fido.podcasts).length}
+              disabled={!fido.podcasts.length}
               handleFetchFido={this.handleFetchFido.bind(this)} />
           </div>
           <div>
+            <button className="my__button" data-size="s" data-color="red" className="ladda-button " onClick={() => {
+                window.localStorage.clear();
+                window.location.reload(true);
+              }}><span className="ladda-label">Delete LocalStorage</span></button>
             <button className="my__button" data-size="s" data-color="green" className="ladda-button " onClick={this.toggleMyPodcasts.bind(this)}><span className="ladda-label">My Podcasts</span></button>
           </div>
         </header>
